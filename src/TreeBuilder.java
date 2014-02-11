@@ -12,7 +12,7 @@ public class NewickTreeBuilder {
     private static LinkedHashMap<String, ArrayList<String>> rawTreeListOfNodes = new LinkedHashMap<String, ArrayList<String>>();
     
     public static void main(String[] args) throws FileNotFoundException {
-        String fileName = "tree/proteins_tree.csv";
+        String fileName = "proteins_tree.csv";
         long before = System.currentTimeMillis();
         BufferedReader bf;
         PrintWriter pw;
