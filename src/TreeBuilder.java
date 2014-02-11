@@ -63,19 +63,7 @@ public class NewickTreeBuilder {
             e.printStackTrace();
         }
         try {
-            String curLine;
-            bf = new BufferedReader(new InputStreamReader(new FileInputStream("parseProtPept.txt")));
-            while ((curLine = bf.readLine()) != null) {
-                String[] ch = curLine.split(";");
-                ArrayList<String> a = new ArrayList<String>();
-                a.addAll(Arrays.asList(ch).subList(1, ch.length));
-                pro2pepList.put(ch[0], a);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            newick(prefix + "output.txt", tree, false);
+            newick(prefix + "output.txt", tree);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -83,7 +71,7 @@ public class NewickTreeBuilder {
         PhyShow.main(new String[]{});
     }
 
-    private static void newick(String fileName, Tree<String> tree, boolean isIntensity) throws FileNotFoundException {
+    private static void newick(String fileName, Tree<String> tree) throws FileNotFoundException {
         TreeSet<String> used = new TreeSet<String>();
         pwn = new PrintWriter(fileName);
         dfs(tree, used);
@@ -114,26 +102,6 @@ public class NewickTreeBuilder {
             pwn.print(")");
         }
         pwn.print(w);
-        double curw = countWeight(w);
-        pwn.print(":" + Double.toString(curw));
     }
 
-    private static double countIntensity(double weight, double max_weight) {
-        return (weight * 100) / max_weight;
-    }
-
-    private static double countWeight(String node) {
-        double tmp = 0.0;
-        if (!rawTreeListOfNodes.containsKey(node)) return 0;
-        ArrayList<String> a = rawTreeListOfNodes.get(node);
-        for (String s : a) {
-            if (pro2pepList.containsKey(s)) {
-                ArrayList<String> asd = pro2pepList.get(s);
-                if (asd.size() == 1) {
-                    tmp++;
-                }
-            }
-        }
-        return tmp;
-    }
 }
